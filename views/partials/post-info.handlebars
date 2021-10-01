@@ -1,0 +1,12 @@
+<article class="info-display-container">
+  <div class="info-display-container-header">
+    <a href="/post/{{id}}">{{title}}</a>
+      <span class="info-display-container-header-date">Posted by {{user.username}} on {{format_date created_at}}</span>
+  </div>
+  <div class="info-display-container-body">
+      <p>{{content}}</p>
+    {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on {{format_date created_at}}
+    |
+    <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+  </div>
+</article>

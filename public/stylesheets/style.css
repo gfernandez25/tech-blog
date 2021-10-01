@@ -19,6 +19,8 @@ body {
     height: 100%;
 }
 
+
+
 .header-container {
     height: 250px;
     background: #201110;
@@ -66,14 +68,16 @@ body {
 }
 
 .main-container {
-    height: 100%;
     background: #dce9d5;
-    padding: 20px 50px;
+    padding: 40px 50px;
+    min-height: 1000px;
 }
+/*container that will display post info*/
 
 .info-display-container {
     border-style: solid;
     border-color: #201110;
+    background: #dce9d5;
 }
 
 .info-display-container-header {
@@ -84,27 +88,30 @@ body {
     color: darkgrey;
     font-weight: bolder;
     font-size: 25px;
-    height: 60px;
+    height: 50px;
     padding: 15px;
 }
 
-.info-display-header-content {
-
+.info-display-container-header-date {
+    font-size: 15px;
+    font-weight: lighter;
 }
 
-.info-display-header-date {
-    font-size: 20px;
-    font-weight: normal;
+.info-display-container-body {
+    font-size: 25px;
+    padding: 15px;
+}
+
+.info-display-container-body-comment {
+    font-size: 25px;
+    padding: 30px;
 }
 
 .info-display-header-content-login {
     font-weight: lighter;
 }
 
-.post-container-body {
-    font-size: 25px;
-    padding: 15px;
-}
+
 
 /*login specific classes*/
 

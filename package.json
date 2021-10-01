@@ -3,7 +3,6 @@
   "description": "tech blog cms",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gfernandez25/tech-blog.git"
@@ -11,7 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "seed": "node seeds/index.js"
+    "seeds": "node seeds/index.js"
   },
   "author": "Guillermo Fernandez",
   "license": "ISC",
@@ -19,11 +18,11 @@
     "url": "https://github.com/gfernandez25/tech-blog/issues"
   },
   "homepage": "https://github.com/gfernandez25/tech-blog#readme",
-
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.2",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "express-handlebars": "^5.3.3",
     "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
