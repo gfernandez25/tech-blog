@@ -1,0 +1,22 @@
+<article class="card card--{{class}}">
+    <header class="card-header">
+        <p class="card-header-title">{{title}}</p>
+    </header>
+    <section class="card-body">
+        <form class="form form--{{class}}">
+            {{#each fields}}
+                <label class="form-field">
+                    <span class="form-field-label">{{this.title}}</span>
+                    <input class="form-field-input" id="{{this.id}}" type="{{this.type}}" name="{{this.id}}" required>
+                </label>
+            {{/each}}
+
+            <button class="form-btn-submit" type="submit">{{submit.title}}</button>
+        </form>
+
+        {{#if cta}}
+            <a class="form-cta" href="{{cta.url}}">{{cta.title}}</a>
+        {{/if}}
+    </section>
+</article>
+

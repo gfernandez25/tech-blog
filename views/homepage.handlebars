@@ -1,7 +1,3 @@
-<ul class="no-bullets">
-  {{#each posts as |post|}}
-  <li>
-    {{> post-info post }}
-  </li>
-  {{/each}}
-</ul>
+{{#each posts as |post|}}
+    {{> post post }}
+{{/each}}

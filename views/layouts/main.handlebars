@@ -6,35 +6,28 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" href="/stylesheets/style.css">
-
+    <link rel="stylesheet" href="/stylesheets/index.css">
     <title>Tech Blog</title>
 </head>
 
 <body>
 <header class="header-container">
     <nav class="header-container-nav">
-        <a class="header-container-nav-home" href="/">Home</a>
-        <a class="header-container-nav-dashboard" href="#">Dashboard</a>
-        <a class="header-container-nav-login" href="/login">Login</a>
-        <a class="header-container-nav-logout" href="#">Logout</a>
+        <a class="header-container-nav-cta" href="/">Home</a>
+        <a class="header-container-nav-cta" href="/dashboard">Dashboard</a>
+        <a class="header-container-nav-cta" href="/login">Login</a>
+        <a class="header-container-nav-cta" href="/logout">Logout</a>
     </nav>
     <h1 class="header-container-heading-display"> The Tech Blog</h1>
 </header>
 
+<main class="main-container">
+    {{{ body }}}
+</main>
 
-
-    <main class="main-container">
-      {{{ body }}}
-    </main>
-
-    <footer>s
-      Thanks for visiting!
-    </footer>
-
-
-
+<footer>
+    Thanks for visiting!
+</footer>
 
 <header>
     <h1>
@@ -49,9 +42,9 @@
         {{/if}}
     </nav>
 </header>
-  {{#if loggedIn}}
-  <script src="/javascript/logout.js"></script>
-  {{/if}}
+{{#if loggedIn}}
+    <script src="/javascript/logout.js"></script>
+{{/if}}
 </body>
 
 </html>

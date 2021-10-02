@@ -1,0 +1,56 @@
+// container that will display cards
+
+.card {
+  border-style: solid;
+  border-color: #201110;
+  background: #dce9d5;
+  margin-bottom: 30px;
+
+  &--comment {
+    margin-left: 60px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #201110;
+    font-size: 25px;
+    padding: 15px;
+    min-height: 60px;
+
+    &-title,
+    &-date {
+      color: #dce9d5;
+    }
+
+    &-title {
+      text-transform: capitalize;
+      font-weight: bold;
+    }
+
+    &-date {
+      font-size: 15px;
+    }
+  }
+
+  &-body {
+    padding: 30px 15px;
+
+    &--post {
+      font-size: 25px;
+    }
+
+    .card--comment & {
+        padding: 60px 30px 30px;
+
+        p {
+          font-size: 25px;
+          margin-bottom: 30px;
+        }
+    }
+  }
+}
+
+
+

@@ -1,5 +1,4 @@
-{{> post-info post}}
-
+{{> post post}}
 {{#if loggedIn}}
 <form class="comment-form">
   <div>
@@ -13,7 +12,9 @@
 </form>
 {{/if}}
 
-{{> comments post.comments}}
+{{#each post.comments }}
+    {{> comment this}}
+{{/each}}
 
 {{#if loggedIn}}
 <script src="/javascript/comment.js"></script>
