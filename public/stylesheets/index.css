@@ -37,16 +37,15 @@ body {
   margin: 40px 20px 40px 0;
 }
 .header-container-heading-display {
-  width: 25%;
   margin-bottom: 30px;
   text-align: center;
   font-weight: bold;
-  padding-top: 20px;
-  height: 70px;
+  padding: 20px 30px;
   border-radius: 10px;
   color: #201110;
   background: #dce9d5;
   box-shadow: 8px 8px 0 darkgrey;
+  display: inline-block;
 }
 
 .card {

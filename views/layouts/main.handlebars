@@ -14,7 +14,7 @@
 <header class="header-container">
     <nav class="header-container-nav">
         <a class="header-container-nav-cta" href="/">Home</a>
-        <a class="header-container-nav-cta" href="/dashboard">Dashboard</a>
+        <a class="header-container-nav-cta" href="/post/dashboard">Dashboard</a>
         <a class="header-container-nav-cta" href="/login">Login</a>
         <a class="header-container-nav-cta" href="/logout">Logout</a>
     </nav>
@@ -35,7 +35,7 @@
     </h1>
     <nav>
         {{#if loggedIn}}
-            <a href="/dashboard">dashboard</a>
+            <a href="/post/dashboard">dashboard</a>
             <button id="logout" class="btn-no-style">logout</button>
         {{else}}
             <a href="/login">login</a>
