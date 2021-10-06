@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const authApiQuery = require('../controllers/queries/authentication-routes.queries')
 
 router.get('/login', (req, res) => {
     // if (req.session.loggedIn) {
@@ -35,10 +36,35 @@ router.get('/login', (req, res) => {
         formConfigLogin,
     });
 });
-router.post('/login', (req, res) => {
-//TODO: change into right format
-//TODO: change the logic for login
-//TODO: Test on insomniac
+router.post('/login', async (req, res) => {
+//TODO: change into right format - done
+//TODO: change the logic for login -done
+//TODO: Test on insomniac -done
+//TODO: add session logic
+
+    const query = await authApiQuery.login(req)
+    if (!query) {
+        res.status(400).json({message: 'No user found with that username!'});
+        return;
+    }
+
+    const validPassword = query.checkPassword(req.body.password);
+    if (!validPassword) {
+        res.status(400).json({message: 'Incorrect password!'});
+        return;
+    }
+
+    res.json({user: query, message: 'You are now logged in!'});
+
+    // req.session.save(() => {
+    //     req.session.user_id = dbUserData.id;
+    //     req.session.username = dbUserData.username;
+    //     req.session.loggedIn = true;
+    //
+    //     res.json({ user: dbUserData, message: 'You are now logged in!' });
+    // });
+
+
 });
 
 router.get('/sign-up', (req, res) => {
@@ -72,29 +98,25 @@ router.get('/sign-up', (req, res) => {
         formConfigSignUp,
     });
 });
-router.post('/sign-up', (req, res) => {
-    //TODO: change into right format
-    //TODO: change the logic for sign up
-    //TODO: Test on insomniac
+router.post('/sign-up', async (req, res) => {
+    //TODO: change into right format - done
+    //TODO: change the logic for sign up - done
+    //TODO: Test on insomniac - done
+    //TODO: Need to add session logic
 
-    // // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
-    // User.create({
-    //     username: req.body.username,
-    //     password: req.body.password
-    // })
-    //     .then(dbUserData => {
-    //         req.session.save(() => {
-    //             req.session.user_id = dbUserData.id;
-    //             req.session.username = dbUserData.username;
-    //             req.session.loggedIn = true;
+    const query = await authApiQuery.signUp(req)
+    res.json(query)
+
+    // .then(dbUserData => {
+    //     req.session.save(() => {
+    //         req.session.user_id = dbUserData.id;
+    //         req.session.username = dbUserData.username;
+    //         req.session.loggedIn = true;
     //
-    //             res.json(dbUserData);
-    //         });
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //         res.status(500).json(err);
+    //         res.json(dbUserData);
     //     });
+    // })
+
 });
 
 router.get('/logout', (req, res) => {

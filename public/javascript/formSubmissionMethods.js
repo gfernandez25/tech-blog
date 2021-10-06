@@ -6,6 +6,8 @@ function submitCreatePost(e){
     )
 }
 
+//todo: delete function
+
 function submitEditPost(e){
     e.preventDefault();
 

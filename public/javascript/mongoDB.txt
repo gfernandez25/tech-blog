@@ -1,0 +1,32 @@
+mongoDB
+In your terminal, run the following command:
+
+ brew tap mongodb/brew
+
+Run the following installation command:
+
+ brew install mongodb-community@4.2
+NOTE
+The version number following the @ symbol may have changed. See the MongoDB tutorial on installing on macOS (Links to an external site.) to make sure that you have the latest version to use with this command.
+
+Run MongoDB as a Service on macOS
+To run MongoDB as a service on macOS, follow these steps:
+
+Run the following command in your terminal:
+
+ brew services start mongodb-community@4.2
+Verify that the service is running by using the following command:
+
+ ps aux | grep -v grep | grep mongod
+If you don't see any output from the command above, try restarting the service by running the following command in your terminal:
+
+ brew services restart mongodb-community
+NOTE
+It’s possible that you may already have the MongoDB server running as a service on your computer. You might not have to run mongod in a separate terminal before initializing the Mongo shell. However, if you have trouble using the Mongo shell with the command mongo, try opening a new terminal and running the command mongod.
+
+Now open a new instance of your terminal and enter the following command:
+
+ mongo
+This will initialize the Mongo shell and allow you to begin entering Mongo shell commands.
+
+Finally, bookmark this list of MongoDB shell commands (Links to an external site.) for quick reference.
