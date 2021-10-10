@@ -1,28 +1,29 @@
 const router = require('express').Router();
-const routeBuilder = require("../utils/routeBuilder");
 const postApiQuery = require("./queries/post-routes.queries");
 
-router.get('/all', async (req, res) => {
-    // const query = await routeBuilder(postApiQuery.all);
-    const query = await postApiQuery.all;
-
-    res.render('homepage', {
-        posts: query.map(post => post.get({plain: true})),
-        loggedIn: req.session.loggedIn
-    });
+router.get('/all', (req, res) => {
+    postApiQuery.all(req)
+        .then(query => {
+            res.render('homepage', {
+                posts: query.map(post => post.get({plain: true})),
+                loggedIn: req.session.loggedIn
+            });
+        })
+        .catch(err => res.status(500).json(err))
 });
-
-router.get('/dashboard', async (req, res) => {
-    const query = await routeBuilder(postApiQuery.all);
-
-    res.render('dashboard', {
-        posts: query.map(post => post.get({plain: true})),
-        loggedIn: true
-    });
+router.get('/dashboard', (req, res) => {
+    postApiQuery.all(req)
+        .then(query => {
+            res.render('dashboard', {
+                posts: query.map(post => post.get({plain: true})),
+                loggedIn: true
+            });
+        })
+        .catch(err => res.status(500).json(err))
 });
 
 router.get('/create-post', (req, res) => {
-    const newPost = {
+    const newPostFormConfig = {
         id: "create-post",
         title: "create new post",
         fields: [
@@ -44,16 +45,19 @@ router.get('/create-post', (req, res) => {
     }
 
     res.render('create-post', {
-        newPost,
+        newPostFormConfig,
     });
 });
-router.post('/create-post', async (req, res) => {
-    const query = await postApiQuery.newPost(req)
-    res.json(query)
+router.post('/create-post', (req, res) => {
+    postApiQuery.newPost(req)
+        .then(query => {
+            res.json(query)
+        })
+        .catch(err => res.status(500).json(err))
 });
 
-router.get('/:id', async (req, res) => {
-    const addNewComment = {
+router.get('/:id', (req, res) => {
+    const newCommentFormConfig = {
         id: "new-comment",
         fields: [
             {
@@ -67,71 +71,87 @@ router.get('/:id', async (req, res) => {
             onsubmit: "submitNewComment(event)"
         }
     }
-    const query = await postApiQuery.singlePost(req);
 
-    if (!query) {
-        res.status(404).json({message: 'No post found with this id'});
-        return;
-    }
+    postApiQuery.singlePost(req)
+        .then(query => {
+            if (!query) {
+                res.status(404).json({message: 'No post found with this id'});
+                return;
+            }
 
-    res.render('single-post', {
-        post: query.get({plain: true}),
-        addNewComment,
-        loggedIn: req.session.loggedIn
-    });
+            res.render('single-post', {
+                post: query.get({plain: true}),
+                newCommentFormConfig,
+                loggedIn: req.session.loggedIn
+            });
+        })
+        .catch(err => res.status(500).json(err))
 });
 
-router.post('/:id/comments', async (req, res) => {
-    const query = await postApiQuery.addNewComment(req)
-
-    res.json({success: true})
+router.post('/:id/comments', (req, res) => {
+    postApiQuery.addNewComment(req)
+        .then(query => {
+            res.json(query)
+        })
+        .catch(err => res.status(500).json(err))
 });
 
 router.get('/:id/edit', /*withAuth,*/ (req, res) => {
-    const newPost = {
-        id: "edit-post",
-        title: "edit post",
-        fields: [
-            {
-                title: "Title",
-                id: "title",
-                type: "text",
-            },
-            {
-                title: "Content",
-                id: "content",
-                type: "text",
-            },
-        ],
-        submit: {
-            title: "Edit",
-            onsubmit: "submitEditPost(event)"
-        },
-        delete: true
-    }
-    res.render('create-post', {
-        newPost,
-    });
+    postApiQuery.singlePost(req)
+        .then(query => {
+            const newPostFormConfig = {
+                id: "edit-post",
+                title: "edit post",
+                fields: [
+                    {
+                        title: "Title",
+                        id: "title",
+                        type: "text",
+                        value: query.title,
+                    },
+                    {
+                        title: "Content",
+                        id: "content",
+                        type: "text",
+                        value: query.content
+                    },
+                ],
+                submit: {
+                    title: "Edit",
+                    onsubmit: "submitEditPost(event)"
+                },
+                delete: true
+            }
+
+            res.render('create-post', {
+                newPostFormConfig,
+            });
+        })
+        .catch(err => res.status(500).json(err))
+
+
 });
-router.put('/:id/edit', async (req, res) => {
-    const query = await postApiQuery.updatePost(req)
-
-    if (query[0] === 0) {
-        res.status(404).json({message: 'No post found with this id'});
-        return;
-    }
-
-    res.json(query)
+router.put('/:id/edit', (req, res) => {
+    postApiQuery.updatePost(req)
+        .then(query => {
+            if (query[0] === 0) {
+                res.status(404).json({message: 'No post found with this id'});
+                return
+            }
+            res.json(query)
+        })
+        .catch(err => res.status(500).json(err))
 });
-router.delete('/:id/edit', async (req, res) => {
-    const query = await postApiQuery.deletePost(req)
-
-    if (!query) {
-        res.status(404).json({message: 'No post found with this id'});
-        return;
-    }
-
-    res.json(query)
+router.delete('/:id/edit', (req, res) => {
+    postApiQuery.deletePost(req)
+        .then(query => {
+            if (!query) {
+                res.status(404).json({message: 'No post found with this id'});
+                return
+            }
+            res.json(query)
+        })
+        .catch(err => res.status(500).json(err))
 });
 
 module.exports = router;

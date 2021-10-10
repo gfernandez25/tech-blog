@@ -13,10 +13,7 @@ Comment.init(
     },
     comment_text: {
       type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [1]
-      }
+      allowNull: false,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -31,7 +28,7 @@ Comment.init(
         model: 'post',
         key: 'id'
       }
-    }
+    },
   },
   {
     sequelize,

@@ -7,14 +7,14 @@
             {{#each fields}}
                 <label class="form-field">
                     <span class="form-field-label">{{this.title}}</span>
-                    <input class="form-field-input" id="{{this.id}}" type="{{this.type}}" name="{{this.id}}" required>
+                    <input class="form-field-input" id="{{this.id}}" type="{{this.type}}" name="{{this.id}}" value="{{this.value}}" required>
                 </label>
             {{/each}}
 
             <button class="form-btn-submit" type="submit">{{submit.title}}</button>
 
             {{#if delete}}
-                <button class="form-btn-submit" type="button">delete</button>
+                <button class="form-btn-submit delete" onclick="submitDeletePost(event)" type="button">delete</button>
             {{/if}}
         </form>
 

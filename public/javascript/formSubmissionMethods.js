@@ -1,29 +1,101 @@
-function submitCreatePost(e){
+function submitCreatePost(e) {
     e.preventDefault();
-    console.log(
-        e.target["title"].value, 
-        e.target["content"].value
-    )
+
+    fetch(`/post/create-post`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: e.target["title"].value,
+            content: e.target["content"].value,
+            // todo: get user id from session
+            user_id: 2,
+        })
+    }).then(response => {
+        window.location.href = '/post/dashboard';
+    })
 }
 
-//todo: delete function
-
-function submitEditPost(e){
+function submitEditPost(e) {
     e.preventDefault();
 
-    console.log({"submitEditPost": e})
+    const id = location.pathname.split("/")
+
+    console.log(`${id[2]}`)
+
+    fetch(`/post/${id[2]}/edit`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: e.target["title"].value,
+            content: e.target["content"].value,
+            // todo: get user id from session
+            user_id: 2,
+        })
+
+    }).then(response => {
+        window.location.href = '/post/dashboard';
+    })
 }
 
-function submitLogin(e){
+function submitDeletePost(e) {
     e.preventDefault();
 
-    console.log({"submitLogin": e})
+    console.log("delete")
+
+    const id = location.pathname.split("/")
+    console.log(id)
+    fetch(`/post/${id[2]}/edit`, {
+        method: 'DELETE'
+    }).then(response => {
+        window.location.href = '/post/dashboard';
+    })
 }
 
-function submitSignUp(e){
+function submitLogin(e) {
     e.preventDefault();
 
-    console.log({"submitSignUp": e})
+    fetch(`/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: e.target["username"].value,
+            password: e.target["password"].value,
+            //todo: session logic
+        })
+
+    }).then(response => {
+        console.log(response)
+        if (response.status === 200) {
+            location.reload();
+        }
+    })
+}
+
+function submitSignUp(e) {
+
+    fetch(`/sign-up`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: e.target["username"].value,
+            password: e.target["password"].value,
+            //todo: session logic
+        })
+
+    }).then(response => {
+        console.log(response)
+        if (response.status === 200) {
+            location.reload();
+        }
+    })
 }
 
 function retrieveAllComments() {
@@ -32,7 +104,6 @@ function retrieveAllComments() {
 
 function submitNewComment(e) {
     e.preventDefault();
-
     const postId = location.pathname.split("/")
     fetch(`/post/${postId[2]}/comments/`, {
         method: 'POST',
@@ -45,7 +116,7 @@ function submitNewComment(e) {
             userId: 1,
         })
 
-    }).then( response => {
+    }).then(response => {
         console.log(response)
         if (response.status === 200) {
             location.reload(true);
