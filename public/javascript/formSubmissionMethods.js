@@ -78,6 +78,7 @@ function submitLogin(e) {
 }
 
 function submitSignUp(e) {
+    e.preventDefault();
 
     fetch(`/sign-up`, {
         method: 'POST',
@@ -87,13 +88,12 @@ function submitSignUp(e) {
         body: JSON.stringify({
             username: e.target["username"].value,
             password: e.target["password"].value,
-            //todo: session logic
         })
 
     }).then(response => {
         console.log(response)
         if (response.status === 200) {
-            location.reload();
+            window.location.href = '/post/dashboard';
         }
     })
 }
@@ -123,6 +123,8 @@ function submitNewComment(e) {
         }
     })
 }
+
+
 
 
 

@@ -8,6 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const sequelize = require("./config/connection");
+
+//middleware
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
@@ -19,11 +21,11 @@ const sess = {
         db: sequelize
     })
 };
+
+app.use(session(sess));
 app.use(bodyParser.json())
 
 // app.use(require('connect').bodyParser());
-
-app.use(session(sess));
 
 const helpers = require('./utils/helpers'); //follow up to see if this is needed for project
 

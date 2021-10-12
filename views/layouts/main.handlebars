@@ -15,8 +15,11 @@
     <nav class="header-container-nav">
         <a class="header-container-nav-cta" href="/">Home</a>
         <a class="header-container-nav-cta" href="/post/dashboard">Dashboard</a>
-        <a class="header-container-nav-cta" href="/login">Login</a>
-        <a class="header-container-nav-cta" href="/logout">Logout</a>
+        {{#if loggedIn}}
+            <a class="header-container-nav-cta" href="/logout">Logout</a>
+        {{else}}
+            <a class="header-container-nav-cta" href="/login">Login</a>
+        {{/if}}
     </nav>
     <h1 class="header-container-heading-display"> The Tech Blog</h1>
 </header>
@@ -35,10 +38,10 @@
     </h1>
     <nav>
         {{#if loggedIn}}
-            <a href="/post/dashboard">dashboard</a>
+            <a href="/post/dashboard">Im logged in</a>
             <button id="logout" class="btn-no-style">logout</button>
         {{else}}
-            <a href="/login">login</a>
+            <a href="/login">im logged out</a>
         {{/if}}
     </nav>
 </header>
@@ -46,5 +49,5 @@
     <script src="/javascript/logout.js"></script>
 {{/if}}
 </body>
-
+<script src="/javascript/formSubmissionMethods.js"></script>
 </html>

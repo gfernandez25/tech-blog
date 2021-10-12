@@ -1,6 +1,58 @@
 const router = require('express').Router();
 const authApiQuery = require('../controllers/queries/authentication-routes.queries')
 
+router.get('/sign-up', (req, res) => {
+
+    const formConfigSignUp = {
+        id: "sign-up",
+        title: "Sign Up",
+        fields: [
+            {
+                title: "Username",
+                id: "username",
+                type: "text",
+            },
+            {
+                title: "Password",
+                id: "password",
+                type: "password",
+            }
+        ],
+        submit: {
+            title: "Sign Up!",
+            onsubmit: "submitSignUp(event)"
+        },
+        cta: {
+            url: "/login",
+            title: "Login instead"
+        }
+    }
+
+    res.render('sign-up', {
+        formConfigSignUp,
+    });
+});
+router.post('/sign-up',  (req, res) => {
+
+    authApiQuery.signUp(req)
+
+    /*The req.session.save() method will initiate the creation of the session
+    and then run the callback function once completed*/
+        .then(query => {
+            req.session.save(() => {
+                req.session.user_id = query.id;
+                req.session.username = query.username;
+                req.session.loggedIn = true;
+
+                console.log(req.session)
+
+                res.json(query);
+
+            });
+        })
+
+});
+
 router.get('/login', (req, res) => {
     // if (req.session.loggedIn) {
     //     res.redirect('/');
@@ -37,9 +89,6 @@ router.get('/login', (req, res) => {
     });
 });
 router.post('/login', async (req, res) => {
-//TODO: change into right format - done
-//TODO: change the logic for login -done
-//TODO: Test on insomniac -done
 //TODO: add session logic
 
     const query = await authApiQuery.login(req)
@@ -57,66 +106,12 @@ router.post('/login', async (req, res) => {
     res.json({user: query, message: 'You are now logged in!'});
 
     // req.session.save(() => {
-    //     req.session.user_id = dbUserData.id;
-    //     req.session.username = dbUserData.username;
+    //     req.session.user_id = query.id;
+    //     req.session.username = query.username;
     //     req.session.loggedIn = true;
     //
-    //     res.json({ user: dbUserData, message: 'You are now logged in!' });
+    //     res.json({ user: query, message: 'You are now logged in!' });
     // });
-
-
-});
-
-router.get('/sign-up', (req, res) => {
-
-    const formConfigSignUp = {
-        id: "sign-up",
-        title: "Sign Up",
-        fields: [
-            {
-                title: "Username",
-                id: "username",
-                type: "text",
-            },
-            {
-                title: "Password",
-                id: "password",
-                type: "password",
-            }
-        ],
-        submit: {
-            title: "Sign Up!",
-            onsubmit: "submitSignUp(event)"
-        },
-        cta: {
-            url: "/login",
-            title: "Login instead"
-        }
-    }
-
-    res.render('sign-up', {
-        formConfigSignUp,
-    });
-});
-router.post('/sign-up', async (req, res) => {
-    //TODO: change into right format - done
-    //TODO: change the logic for sign up - done
-    //TODO: Test on insomniac - done
-    //TODO: Need to add session logic
-
-    const query = await authApiQuery.signUp(req)
-    res.json(query)
-
-    // .then(dbUserData => {
-    //     req.session.save(() => {
-    //         req.session.user_id = dbUserData.id;
-    //         req.session.username = dbUserData.username;
-    //         req.session.loggedIn = true;
-    //
-    //         res.json(dbUserData);
-    //     });
-    // })
-
 });
 
 router.get('/logout', (req, res) => {

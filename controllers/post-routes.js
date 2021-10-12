@@ -2,11 +2,12 @@ const router = require('express').Router();
 const postApiQuery = require("./queries/post-routes.queries");
 
 router.get('/all', (req, res) => {
+    console.log("++++++++++++++++", req.session);
     postApiQuery.all(req)
         .then(query => {
             res.render('homepage', {
                 posts: query.map(post => post.get({plain: true})),
-                loggedIn: req.session.loggedIn
+                //loggedIn: req.session.loggedIn
             });
         })
         .catch(err => res.status(500).json(err))
