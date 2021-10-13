@@ -1,8 +1,8 @@
 const router = require('express').Router();
+const withAuth = require('../utils/auth');
 const postApiQuery = require("./queries/post-routes.queries");
 
 router.get('/all', (req, res) => {
-    console.log("++++++++++++++++", req.session);
     postApiQuery.all(req)
         .then(query => {
             res.render('homepage', {
@@ -12,8 +12,8 @@ router.get('/all', (req, res) => {
         })
         .catch(err => res.status(500).json(err))
 });
-router.get('/dashboard', (req, res) => {
-    postApiQuery.all(req)
+router.get('/dashboard', withAuth,(req, res) => {
+    postApiQuery.allUserPosts(req)
         .then(query => {
             res.render('dashboard', {
                 posts: query.map(post => post.get({plain: true})),
@@ -23,7 +23,7 @@ router.get('/dashboard', (req, res) => {
         .catch(err => res.status(500).json(err))
 });
 
-router.get('/create-post', (req, res) => {
+router.get('/create-post', withAuth,(req, res) => {
     const newPostFormConfig = {
         id: "create-post",
         title: "create new post",
@@ -49,7 +49,7 @@ router.get('/create-post', (req, res) => {
         newPostFormConfig,
     });
 });
-router.post('/create-post', (req, res) => {
+router.post('/create-post', withAuth,(req, res) => {
 
     postApiQuery.newPost(req)
         .then(query => {
@@ -58,7 +58,7 @@ router.post('/create-post', (req, res) => {
         .catch(err => res.status(500).json(err))
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', withAuth,(req, res) => {
     const newCommentFormConfig = {
         id: "new-comment",
         fields: [
@@ -90,7 +90,7 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(500).json(err))
 });
 
-router.post('/:id/comments', (req, res) => {
+router.post('/:id/comments', withAuth,(req, res) => {
     postApiQuery.addNewComment(req)
         .then(query => {
             res.json(query)
@@ -98,7 +98,7 @@ router.post('/:id/comments', (req, res) => {
         .catch(err => res.status(400).json(err))
 });
 
-router.get('/:id/edit', /*withAuth,*/ (req, res) => {
+router.get('/:id/edit', withAuth, (req, res) => {
     postApiQuery.singlePost(req)
         .then(query => {
             const newPostFormConfig = {
@@ -133,7 +133,7 @@ router.get('/:id/edit', /*withAuth,*/ (req, res) => {
 
 
 });
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', withAuth,(req, res) => {
     postApiQuery.updatePost(req)
         .then(query => {
             if (query[0] === 0) {
@@ -144,7 +144,7 @@ router.put('/:id/edit', (req, res) => {
         })
         .catch(err => res.status(500).json(err))
 });
-router.delete('/:id/edit', (req, res) => {
+router.delete('/:id/edit', withAuth,(req, res) => {
     postApiQuery.deletePost(req)
         .then(query => {
             if (!query) {

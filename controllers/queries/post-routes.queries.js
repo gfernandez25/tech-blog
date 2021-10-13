@@ -28,7 +28,36 @@ const all = function(req) {
         ]
     })
 };
-
+const allUserPosts = function(req) {
+    return Post.findAll({
+        attributes: [
+            'id',
+            'title',
+            'content',
+            'created_at',
+        ],
+        where: {
+            user_id: req.session.user_id
+        },
+        order:[
+            ['createdAt', 'DESC']
+        ],
+        include: [
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            },
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ]
+    })
+};
 const singlePost = function(req) {
     const {id} = req.params;
 //todo: sort does not work, need to fix. look more into it this is a single post
@@ -116,14 +145,10 @@ const addNewComment = function (req) {
 
 module.exports = {
     all,
+    allUserPosts,
     singlePost,
     newPost,
     updatePost,
     deletePost,
     addNewComment
 };
-
-// .then(query => {
-//
-// })
-//     .catch(err => res.status(500).json(err))
