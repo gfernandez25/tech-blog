@@ -50,6 +50,7 @@ router.get('/create-post', (req, res) => {
     });
 });
 router.post('/create-post', (req, res) => {
+
     postApiQuery.newPost(req)
         .then(query => {
             res.json(query)
@@ -94,7 +95,7 @@ router.post('/:id/comments', (req, res) => {
         .then(query => {
             res.json(query)
         })
-        .catch(err => res.status(500).json(err))
+        .catch(err => res.status(400).json(err))
 });
 
 router.get('/:id/edit', /*withAuth,*/ (req, res) => {

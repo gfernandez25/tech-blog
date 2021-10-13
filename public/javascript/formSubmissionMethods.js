@@ -9,8 +9,6 @@ function submitCreatePost(e) {
         body: JSON.stringify({
             title: e.target["title"].value,
             content: e.target["content"].value,
-            // todo: get user id from session
-            user_id: 2,
         })
     }).then(response => {
         window.location.href = '/post/dashboard';
@@ -64,15 +62,14 @@ function submitLogin(e) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: e.target["username"].value,
-            password: e.target["password"].value,
-            //todo: session logic
+            username: e.target["username"].value.trim(),
+            password: e.target["password"].value.trim(),
         })
 
     }).then(response => {
         console.log(response)
         if (response.status === 200) {
-            location.reload();
+            window.location.href = '/post/dashboard';
         }
     })
 }
@@ -102,26 +99,47 @@ function retrieveAllComments() {
     e.preventDefault();
 }
 
-function submitNewComment(e) {
+async function submitNewComment(e) {
     e.preventDefault();
-    const postId = location.pathname.split("/")
-    fetch(`/post/${postId[2]}/comments/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            comment: e.target["comment"].value,
-            // todo: get user id from session
-            userId: 1,
-        })
 
-    }).then(response => {
-        console.log(response)
-        if (response.status === 200) {
-            location.reload(true);
+    const postId = location.pathname.split("/")
+
+        const response = await fetch(`/post/${postId[2]}/comments`, {
+            method: 'POST',
+            body: JSON.stringify({
+                comment_text: e.target["comment"].value,
+                post_id: postId[2],
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            document.location.reload();
+        } else {
+            console.log(response)
+            alert(response.statusText);
         }
-    })
+
+
+
+    // fetch(`/post/${postId[2]}/comments`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         comment: e.target["comment"].value,
+    //
+    //     })
+    //
+    // }).then(response => {
+    //     console.log(response)
+    //     if (response.status === 200) {
+    //         location.reload(true);
+    //     }
+    // })
 }
 
 

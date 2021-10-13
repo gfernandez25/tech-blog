@@ -31,7 +31,7 @@ const all = function(req) {
 
 const singlePost = function(req) {
     const {id} = req.params;
-//todo: sort does not work, need to fix
+//todo: sort does not work, need to fix. look more into it this is a single post
     return Post.findOne({
         where: {id},
         attributes: [
@@ -62,7 +62,8 @@ const singlePost = function(req) {
     });
 }
 const newPost = function (req) {
-    const {title, content, user_id} = req.body;
+    const {title, content} = req.body;
+    const user_id = req.session.user_id;
 
     return Post.create({
         title,
@@ -102,13 +103,14 @@ const deletePost = function (req) {
     })
 }
 const addNewComment = function (req) {
-    const {comment_text, user_id} = req.body;
-    const {id} = req.params;
+    const {comment_text, post_id} = req.body;
+    const user_id = req.session.user_id;
 
     return Comment.create({
         comment_text,
         user_id,
-        post_id: parseInt(id),
+        post_id: parseInt(post_id),
+
     })
 }
 

@@ -54,10 +54,10 @@ router.post('/sign-up',  (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    // if (req.session.loggedIn) {
-    //     res.redirect('/');
-    //     return;
-    // }
+    if (req.session.loggedIn) {
+        res.redirect('/post/dashboard');
+        return;
+    }
 
     const formConfigLogin = {
         id: "login",
@@ -89,9 +89,8 @@ router.get('/login', (req, res) => {
     });
 });
 router.post('/login', async (req, res) => {
-//TODO: add session logic
-
     const query = await authApiQuery.login(req)
+
     if (!query) {
         res.status(400).json({message: 'No user found with that username!'});
         return;
@@ -103,15 +102,13 @@ router.post('/login', async (req, res) => {
         return;
     }
 
-    res.json({user: query, message: 'You are now logged in!'});
+    req.session.save(() => {
+        req.session.user_id = query.id;
+        req.session.username = query.username;
+        req.session.loggedIn = true;
 
-    // req.session.save(() => {
-    //     req.session.user_id = query.id;
-    //     req.session.username = query.username;
-    //     req.session.loggedIn = true;
-    //
-    //     res.json({ user: query, message: 'You are now logged in!' });
-    // });
+        res.json({ user: query, message: 'You are now logged in!' });
+    });
 });
 
 router.get('/logout', (req, res) => {
