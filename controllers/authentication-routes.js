@@ -92,13 +92,16 @@ router.post('/login', async (req, res) => {
     const query = await authApiQuery.login(req)
 
     if (!query) {
-        res.status(400).json({message: 'No user found with that username!'});
+        //res.status(400).json({message: 'No user found with that username!'});
+        res.status(404).send({message:'No user found with that username!'});
         return;
     }
 
     const validPassword = query.checkPassword(req.body.password);
     if (!validPassword) {
-        res.status(400).json({message: 'Incorrect password!'});
+        //res.status(400).json({message: 'Incorrect password!'});
+        res.status(404).send({message:'Incorrect password!'});
+
         return;
     }
 
@@ -107,7 +110,7 @@ router.post('/login', async (req, res) => {
         req.session.username = query.username;
         req.session.loggedIn = true;
 
-        res.json({ user: query, message: 'You are now logged in!' });
+        res.status(200).json({ user: query});
     });
 });
 

@@ -26,3 +26,19 @@ body {
   padding: 40px 50px;
   min-height: 1000px;
 }
+
+.add-post-container {
+display: flex;
+ min-height: 50px;
+  justify-content: center;
+
+  &-btn {
+    padding: 15px 30px;
+    color: #dce9d5;
+    background: black;
+    font-size: 30px;
+    border-radius: 5px;
+  }
+
+}
+

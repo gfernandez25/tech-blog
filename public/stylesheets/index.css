@@ -22,6 +22,19 @@ body {
   min-height: 1000px;
 }
 
+.add-post-container {
+  display: flex;
+  min-height: 50px;
+  justify-content: center;
+}
+.add-post-container-btn {
+  padding: 15px 30px;
+  color: #dce9d5;
+  background: black;
+  font-size: 30px;
+  border-radius: 5px;
+}
+
 .header-container {
   background: #201110;
   padding: 0 50px 30px;

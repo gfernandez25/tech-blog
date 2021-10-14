@@ -7,7 +7,8 @@ router.get('/all', (req, res) => {
         .then(query => {
             res.render('homepage', {
                 posts: query.map(post => post.get({plain: true})),
-                //loggedIn: req.session.loggedIn
+                loggedIn: req.session.loggedIn,
+                headingDisplay: 'The Tech Blog'
             });
         })
         .catch(err => res.status(500).json(err))
@@ -17,7 +18,8 @@ router.get('/dashboard', withAuth,(req, res) => {
         .then(query => {
             res.render('dashboard', {
                 posts: query.map(post => post.get({plain: true})),
-                loggedIn: true
+                loggedIn: true,
+                headingDisplay: 'Your Dashboard'
             });
         })
         .catch(err => res.status(500).json(err))
@@ -47,6 +49,8 @@ router.get('/create-post', withAuth,(req, res) => {
 
     res.render('create-post', {
         newPostFormConfig,
+        loggedIn: req.session.loggedIn,
+        headingDisplay: 'The Tech Blog'
     });
 });
 router.post('/create-post', withAuth,(req, res) => {
@@ -84,7 +88,8 @@ router.get('/:id', withAuth,(req, res) => {
             res.render('single-post', {
                 post: query.get({plain: true}),
                 newCommentFormConfig,
-                loggedIn: req.session.loggedIn
+                loggedIn: req.session.loggedIn,
+                headingDisplay: 'The Tech Blog'
             });
         })
         .catch(err => res.status(500).json(err))
@@ -127,6 +132,8 @@ router.get('/:id/edit', withAuth, (req, res) => {
 
             res.render('create-post', {
                 newPostFormConfig,
+                loggedIn: req.session.loggedIn,
+                headingDisplay: 'The Tech Blog'
             });
         })
         .catch(err => res.status(500).json(err))

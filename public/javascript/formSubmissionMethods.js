@@ -70,8 +70,13 @@ function submitLogin(e) {
         console.log(response)
         if (response.status === 200) {
             window.location.href = '/post/dashboard';
-        }
-    })
+        }else {
+          response.json()
+              .then (response => {
+                alert(response.message)
+            });
+
+    }})
 }
 
 function submitSignUp(e) {

@@ -21,33 +21,13 @@
             <a class="header-container-nav-cta" href="/login">Login</a>
         {{/if}}
     </nav>
-    <h1 class="header-container-heading-display"> The Tech Blog</h1>
+    <h1 class="header-container-heading-display"> {{#if loggedIn}}{{headingDisplay}}{{else}}The Tech Blog {{/if}}</h1>
 </header>
 
 <main class="main-container">
     {{{ body }}}
 </main>
 
-<footer>
-    Thanks for visiting!
-</footer>
-
-<header>
-    <h1>
-        <a href="/">Just Tech News</a>
-    </h1>
-    <nav>
-        {{#if loggedIn}}
-            <a href="/post/dashboard">Im logged in</a>
-            <button id="logout" class="btn-no-style">logout</button>
-        {{else}}
-            <a href="/login">im logged out</a>
-        {{/if}}
-    </nav>
-</header>
-{{#if loggedIn}}
-    <script src="/javascript/logout.js"></script>
-{{/if}}
 </body>
 <script src="/javascript/formSubmissionMethods.js"></script>
 </html>
