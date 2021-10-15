@@ -29,7 +29,7 @@ Blog website, where developers can publish their blog posts and comment on other
 13. open browser and go to local host
 
 ## Usage
-code can be downloaded from github and run from a local server or you can visit deployed website on heroku
+code can be downloaded from github and run from a local server or you can visit deployed app on heroku
 
 ## Screenshot
 ![ScreenShot](public/images/tech-blog.png)
