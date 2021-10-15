@@ -29,7 +29,8 @@ Blog website, where developers can publish their blog posts and comment on other
 13. open browser and go to local host
 
 ## Usage
-code can be downloaded from github and run from a local server or you can visit deployed app on heroku
+code can be downloaded from github and run from a local server or you can visit the deployed app on heroku
+[tech blog](https://shrouded-lowlands-98257.herokuapp.com/)
 
 ## Screenshot
 ![ScreenShot](public/images/tech-blog.png)
